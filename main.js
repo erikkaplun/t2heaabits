@@ -80,15 +80,6 @@ $(function() {
         currentQuestionNr = nextQuestionNr;
     }
 
-    // See funktsioon liigub ühe slaidi võrra edasi.
-    function nextSlide() {
-        changeSlide(RIGHT);
-    }
-
-    function prevSlide() {
-        changeSlide(LEFT);
-    }
-
-    $('#button-next').click(nextSlide);
-    $('#button-prev').click(prevSlide);
+    $('#button-next').click(function() { changeSlide(RIGHT); });
+    $('#button-prev').click(function() { changeSlide(LEFT); });
 });
