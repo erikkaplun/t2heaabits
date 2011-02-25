@@ -19,35 +19,37 @@ LAST_QUESTION_NR = QUESTIONS.length - 1;
 // Kui tahame disaini muuta, peame ainult siinse numbri ära muutma.
 SLIDE_WIDTH = 400;
 
+RIGHT = 1;
+LEFT = -1;
+
 
 $(function() {
 
     var activeSlide = $('#slide-1');
     var passiveSlide = $('#slide-2');
 
-    // tee aktiivne slaid nähtavaks:
-    activeSlide.css("left", 0);
-
-
     // See muutuja hoiab järge, millise küsimuse juures me parajasti
     // oleme.
     var currentQuestionNr = 0;
 
+    prepareSlide(activeSlide, currentQuestionNr);
+
+    // tee aktiivne slaid nähtavaks:
+    activeSlide.css("left", 0);
+
 
     // See protseduur/funktsioon valmistab "lavataguse" slaidi ette
     // mingi etteantud küsimuse kuvamiseks.
-    function preparePassiveSlide(questionNr) {
+    function prepareSlide(slide, questionNr) {
         var question = QUESTIONS[questionNr];
 
         // Leiame selle span'i, mille sees alguses on LETTER HERE:
-        var spanElement = passiveSlide.find("span");
+        var spanElement = slide.find("span");
 
         // Määrame selle elemendi sisuks question.letter'i sisu:
         spanElement.text(question.letter);
     }
 
-    RIGHT = 1;
-    LEFT = -1;
     function move(direction) {
         // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
         // aknaraamist VASAKULE:
@@ -82,7 +84,7 @@ $(function() {
             nextQuestionNr = FIRST_QUESTION_NR;
 
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
-        preparePassiveSlide(nextQuestionNr);
+        prepareSlide(passiveSlide, nextQuestionNr);
         // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
         move(-direction);
 
