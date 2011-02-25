@@ -1,0 +1,27 @@
+/* aknale määrame stiile ID kaudu, sest akent on alati üks */
+#window {
+   position: relative;  /* selleks, et akna sees koordinaadid oleks akna suhtes*/
+   overflow: hidden;
+
+   border: 2px solid gray;
+}
+#controls {
+   position: absolute;
+   top: 0; left: 0;
+}
+
+/* slaididele määrame stiile klassi kaudu, sest slaide pole ainult üks */
+.slide {
+   position: absolute;
+   top: 0px;  /* slaidi ülaosa on alati aknaraamiga kohakuti */
+   left: -1000px;  /* vaikimisi on slaid varjatud */
+
+   background-color: yellow;
+}
+
+/* aken ja slaidid on alati samade mõõtmetega,*/
+/* st pilt akna sees on sama suur kui aken ise. */
+#window, .slide {
+   width: 400px;
+   height: 300px;
+}
