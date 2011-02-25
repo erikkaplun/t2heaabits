@@ -7,7 +7,8 @@
 }
 #controls {
    position: absolute;
-   top: 0; left: 0;
+   top: 0; right: 0;
+   z-index: 1000; /* et next-prev nupud oleks kõige peal alati */
 }
 
 /* slaididele määrame stiile klassi kaudu, sest slaide pole ainult üks */
@@ -15,8 +16,13 @@
    position: absolute;
    top: 0px;  /* slaidi ülaosa on alati aknaraamiga kohakuti */
    left: -1000px;  /* vaikimisi on slaid varjatud */
+}
 
-   background-color: yellow;
+#slide-1 {
+   background-color: #ffa;
+}
+#slide-2 {
+   background-color: #aff;
 }
 
 /* aken ja slaidid on alati samade mõõtmetega,*/
