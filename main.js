@@ -13,6 +13,9 @@ QUESTIONS = [
     {letter: 'h', options: ['banaan', 'koer', 'hiir'], answer: 2}
 ];
 
+FIRST_QUESTION_NR = 0;
+LAST_QUESTION_NR = QUESTIONS.length - 1;
+
 // Kui tahame disaini muuta, peame ainult siinse numbri ära muutma.
 SLIDE_WIDTH = 400;
 
@@ -69,6 +72,14 @@ $(function() {
 
     function changeSlide(direction) {
         var nextQuestionNr = currentQuestionNr + direction;
+
+        // Kui me olime esimese küsimuse peal ja üritasime tagasi minna,
+        // siis lähme hoopis viimase küsimuse peale.
+        if (nextQuestionNr < FIRST_QUESTION_NR)
+            nextQuestionNr = LAST_QUESTION_NR;
+        // ...ja vastupidi ka:
+        else if (nextQuestionNr > LAST_QUESTION_NR)
+            nextQuestionNr = FIRST_QUESTION_NR;
 
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
         preparePassiveSlide(nextQuestionNr);
