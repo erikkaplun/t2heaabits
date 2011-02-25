@@ -39,10 +39,14 @@ $(function() {
         var question = QUESTIONS[questionNr];
 
         // Leiame selle span'i, mille sees alguses on LETTER HERE:
-        var spanElement = slide.find("span");
+        var spanElement = slide.find(".question");
 
         // Määrame selle elemendi sisuks question.letter'i sisu:
         spanElement.text(question.letter);
+
+        slide.find(".option-1").text(question.options[0]);
+        slide.find(".option-2").text(question.options[1]);
+        slide.find(".option-3").text(question.options[2]);
     }
 
 

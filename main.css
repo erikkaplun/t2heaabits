@@ -33,6 +33,30 @@
 }
 
 
-.slide span {
-   font-size: 30px;
+.slide .question {
+   font-size: 40px;
+   position: absolute;
+   top: 50px;
+   left: 50px;
+   width: 300px;
+   text-align: center;
+
+   border: 1px solid red;
+}
+
+.slide .options {
+   position: absolute;
+   left: 50px;
+   bottom: 0px;
+}
+.slide .options .option-1,
+.slide .options .option-2,
+.slide .options .option-3 {
+   width: 100px;
+   height: 100px;
+   float: left;
+
+   text-align: center;
+
+   border: 1px solid red;
 }
