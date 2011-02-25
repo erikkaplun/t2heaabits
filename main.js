@@ -64,10 +64,6 @@ $(function() {
         // ilmub lõpuks täpselt raami keskele nähtavaks.
         passiveSlide.animate({"left": 0});
 
-        swapActiveAndPassive();
-    }
-
-    function swapActiveAndPassive() {
         // Vahetame aktiivse ja passiivse slaidi omavahel:
         var tmp = passiveSlide;
         passiveSlide = activeSlide;
