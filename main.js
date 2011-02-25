@@ -60,7 +60,6 @@ $(function() {
         swapActiveAndPassive();
     }
 
-
     function swapActiveAndPassive() {
         // Vahetame aktiivse ja passiivse slaidi omavahel:
         var tmp = passiveSlide;
@@ -68,31 +67,26 @@ $(function() {
         activeSlide = tmp;
     }
 
-    // See funktsioon liigub ühe slaidi võrra edasi.
-    function nextSlide() {
-        var nextQuestionNr = currentQuestionNr + 1;
+    function changeSlide(direction) {
+        var nextQuestionNr = currentQuestionNr + direction;
 
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
         preparePassiveSlide(nextQuestionNr);
         // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        move(LEFT);
+        move(-direction);
 
         // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
         // slaidi juures:
         currentQuestionNr = nextQuestionNr;
     }
 
+    // See funktsioon liigub ühe slaidi võrra edasi.
+    function nextSlide() {
+        changeSlide(RIGHT);
+    }
+
     function prevSlide() {
-        var nextQuestionNr = currentQuestionNr - 1;
-
-        // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
-        preparePassiveSlide(nextQuestionNr);
-        // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        move(RIGHT);
-
-        // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
-        // slaidi juures:
-        currentQuestionNr = nextQuestionNr;
+        changeSlide(LEFT);
     }
 
     $('#button-next').click(nextSlide);
