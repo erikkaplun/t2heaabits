@@ -87,7 +87,7 @@ $(function() {
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
         preparePassiveSlide(nextQuestionNr);
         // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        moveRight();
+        moveLeft();
 
         // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
         // slaidi juures:
@@ -100,7 +100,7 @@ $(function() {
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
         preparePassiveSlide(nextQuestionNr);
         // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        moveLeft();
+        moveRight();
 
         // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
         // slaidi juures:
