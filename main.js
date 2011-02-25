@@ -43,14 +43,16 @@ $(function() {
         spanElement.text(question.letter);
     }
 
-    function moveRight() {
+    RIGHT = 1;
+    LEFT = -1;
+    function move(direction) {
         // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
         // aknaraamist VASAKULE:
-        passiveSlide.css("left", -SLIDE_WIDTH);
-
+        passiveSlide.css("left", (-direction) * SLIDE_WIDTH);
         // Liigutame aktiivse täispikkuse võrra PAREMALE, nii et ta
         // kaob lõpuks ära
-        activeSlide.animate({"left": SLIDE_WIDTH});
+        activeSlide.animate({"left": direction * SLIDE_WIDTH});
+
         // Liigutame passiivse täispikkuse võrra PAREMALE, nii et ta
         // ilmub lõpuks täpselt raami keskele nähtavaks.
         passiveSlide.animate({"left": 0});
@@ -58,20 +60,6 @@ $(function() {
         swapActiveAndPassive();
     }
 
-    function moveLeft() {
-        // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
-        // aknaraamist PAREMALE:
-        passiveSlide.css("left", SLIDE_WIDTH);
-
-        // Animeerime aktiivse täispikkuse võrra VASAKULE, nii et ta
-        // kaob lõpuks ära
-        activeSlide.animate({"left": -SLIDE_WIDTH});
-        // Animeerime passiivse täispikkuse võrra VASAKULE, nii et ta
-        // ilmub lõpuks täpselt raami keskele nähtavaks.
-        passiveSlide.animate({"left": 0});
-
-        swapActiveAndPassive();
-    }
 
     function swapActiveAndPassive() {
         // Vahetame aktiivse ja passiivse slaidi omavahel:
@@ -87,7 +75,7 @@ $(function() {
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
         preparePassiveSlide(nextQuestionNr);
         // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        moveLeft();
+        move(LEFT);
 
         // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
         // slaidi juures:
@@ -100,7 +88,7 @@ $(function() {
         // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
         preparePassiveSlide(nextQuestionNr);
         // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        moveRight();
+        move(RIGHT);
 
         // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
         // slaidi juures:
