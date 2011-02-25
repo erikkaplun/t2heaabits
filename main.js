@@ -1,6 +1,23 @@
-$(function() {
+// * Iga küsimus käib ühe tähe kohta,  (letter)
+// * igal küsimusel on kolm vastusevarianti,  (options)
+// * üks vastusevariantidest on õige:  (answer)
+//     0-esimene, 1=teine, 2=kolmas.
+QUESTIONS = [
+    {letter: 'a', options: ['aken', 'elevant', 'banaan'], answer: 0},
+    {letter: 'b', options: ['koer', 'banaan', 'elevant'], answer: 1},
+    {letter: 'c', options: ['aken', 'koer', 'coca-cola'], answer: 2},
+    {letter: 'd', options: ['dolomiit', 'kass', 'hiir'], answer: 0},
+    {letter: 'k', options: ['dolomiit', 'kass', 'hiir'], answer: 1},
+    {letter: 'x', options: ['xanax', 'elevant', 'ratas'], answer: 0},
+    {letter: 'r', options: ['koer', 'ratas', 'xanax'], answer: 1},
+    {letter: 'h', options: ['banaan', 'koer', 'hiir'], answer: 2}
+];
 
-    var SLIDE_WIDTH = 400;
+// Kui tahame disaini muuta, peame ainult siinse numbri ära muutma.
+SLIDE_WIDTH = 400;
+
+
+$(function() {
 
     var activeSlide = $('#slide-1');
     var passiveSlide = $('#slide-2');
@@ -8,6 +25,23 @@ $(function() {
     // tee aktiivne slaid nähtavaks:
     activeSlide.css("left", 0);
 
+
+    // See muutuja hoiab järge, millise küsimuse juures me parajasti
+    // oleme.
+    var currentQuestionNr = 0;
+
+
+    // See protseduur/funktsioon valmistab "lavataguse" slaidi ette
+    // mingi etteantud küsimuse kuvamiseks.
+    function preparePassiveSlide(questionNr) {
+        var question = QUESTIONS[questionNr];
+
+        // Leiame selle span'i, mille sees alguses on LETTER HERE:
+        var spanElement = passiveSlide.find("span");
+
+        // Määrame selle elemendi sisuks question.letter'i sisu:
+        spanElement.text(question.letter);
+    }
 
     function moveRight() {
         // Jätame pasiivse slaidi varjatuks,
@@ -30,8 +64,18 @@ $(function() {
         activeSlide = tmp;
     }
 
+    // See funktsioon liigub ühe slaidi võrra edasi.
     function nextSlide() {
+        var nextQuestionNr = currentQuestionNr + 1;
+
+        // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
+        preparePassiveSlide(nextQuestionNr);
+        // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
         moveRight();
+
+        // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
+        // slaidi juures:
+        currentQuestionNr = nextQuestionNr;
     }
 
     function prevSlide() {
