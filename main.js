@@ -32,11 +32,6 @@ $(function() {
     // oleme.
     var currentQuestionNr = 0;
 
-    prepareSlide(activeSlide, currentQuestionNr);
-
-    // tee aktiivne slaid nähtavaks:
-    activeSlide.css("left", 0);
-
 
     // See protseduur/funktsioon valmistab "lavataguse" slaidi ette
     // mingi etteantud küsimuse kuvamiseks.
@@ -49,6 +44,13 @@ $(function() {
         // Määrame selle elemendi sisuks question.letter'i sisu:
         spanElement.text(question.letter);
     }
+
+
+    prepareSlide(activeSlide, currentQuestionNr);
+
+    // tee aktiivne slaid nähtavaks:
+    activeSlide.css("left", 0);
+
 
     function move(direction) {
         // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
