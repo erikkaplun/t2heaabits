@@ -23,78 +23,82 @@ RIGHT = 1;
 LEFT = -1;
 
 
+// Need muutujad hoiavad järge, kumb slaid parajasti aktiivne ja kumb
+// passiivne on.
+activeSlide = null;
+passiveSlide = null;
+
+// See muutuja hoiab järge, millise küsimuse juures me parajasti
+// oleme.
+currentQuestionNr = 0;
+
+
+// See protseduur/funktsioon täidab etteantud slaidi etteantud
+// küsimusega.
+function prepareSlide(slide, questionNr) {
+    var question = QUESTIONS[questionNr];
+
+    // Leiame selle span'i, mille sees alguses on LETTER HERE:
+    var spanElement = slide.find(".question");
+
+    // Määrame selle elemendi sisuks question.letter'i sisu:
+    spanElement.text(question.letter);
+
+    slide.find(".option-1").text(question.options[0]);
+    slide.find(".option-2").text(question.options[1]);
+    slide.find(".option-3").text(question.options[2]);
+}
+
+function move(direction) {
+    // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
+    // aknaraamist VASAKULE:
+    passiveSlide.css("left", (-direction) * SLIDE_WIDTH);
+    // Liigutame aktiivse täispikkuse võrra PAREMALE, nii et ta
+    // kaob lõpuks ära
+    activeSlide.animate({"left": direction * SLIDE_WIDTH});
+
+    // Liigutame passiivse täispikkuse võrra PAREMALE, nii et ta
+    // ilmub lõpuks täpselt raami keskele nähtavaks.
+    passiveSlide.animate({"left": 0});
+
+    // Vahetame aktiivse ja passiivse slaidi omavahel:
+    var tmp = passiveSlide;
+    passiveSlide = activeSlide;
+    activeSlide = tmp;
+}
+
+function changeSlide(direction) {
+    var nextQuestionNr = currentQuestionNr + direction;
+
+    // Kui me olime esimese küsimuse peal ja üritasime tagasi minna,
+    // siis lähme hoopis viimase küsimuse peale.
+    if (nextQuestionNr < FIRST_QUESTION_NR)
+        nextQuestionNr = LAST_QUESTION_NR;
+    // ...ja vastupidi ka:
+    else if (nextQuestionNr > LAST_QUESTION_NR)
+        nextQuestionNr = FIRST_QUESTION_NR;
+
+    // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
+    prepareSlide(passiveSlide, nextQuestionNr);
+    // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
+    move(-direction);
+
+    // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
+    // slaidi juures:
+    currentQuestionNr = nextQuestionNr;
+}
+
+
 $(function() {
+    // Võta DOM'ist need DIV'id #slide-1 ja #slide-2
+    activeSlide = $('#slide-1');
+    passiveSlide = $('#slide-2');
 
-    var activeSlide = $('#slide-1');
-    var passiveSlide = $('#slide-2');
-
-    // See muutuja hoiab järge, millise küsimuse juures me parajasti
-    // oleme.
-    var currentQuestionNr = 0;
-
-
-    // See protseduur/funktsioon valmistab "lavataguse" slaidi ette
-    // mingi etteantud küsimuse kuvamiseks.
-    function prepareSlide(slide, questionNr) {
-        var question = QUESTIONS[questionNr];
-
-        // Leiame selle span'i, mille sees alguses on LETTER HERE:
-        var spanElement = slide.find(".question");
-
-        // Määrame selle elemendi sisuks question.letter'i sisu:
-        spanElement.text(question.letter);
-
-        slide.find(".option-1").text(question.options[0]);
-        slide.find(".option-2").text(question.options[1]);
-        slide.find(".option-3").text(question.options[2]);
-    }
-
-
+    // Täida aktiivne slaid sisuga ja tee ta nähtavaks.
     prepareSlide(activeSlide, currentQuestionNr);
-
-    // tee aktiivne slaid nähtavaks:
     activeSlide.css("left", 0);
 
-
-    function move(direction) {
-        // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
-        // aknaraamist VASAKULE:
-        passiveSlide.css("left", (-direction) * SLIDE_WIDTH);
-        // Liigutame aktiivse täispikkuse võrra PAREMALE, nii et ta
-        // kaob lõpuks ära
-        activeSlide.animate({"left": direction * SLIDE_WIDTH});
-
-        // Liigutame passiivse täispikkuse võrra PAREMALE, nii et ta
-        // ilmub lõpuks täpselt raami keskele nähtavaks.
-        passiveSlide.animate({"left": 0});
-
-        // Vahetame aktiivse ja passiivse slaidi omavahel:
-        var tmp = passiveSlide;
-        passiveSlide = activeSlide;
-        activeSlide = tmp;
-    }
-
-    function changeSlide(direction) {
-        var nextQuestionNr = currentQuestionNr + direction;
-
-        // Kui me olime esimese küsimuse peal ja üritasime tagasi minna,
-        // siis lähme hoopis viimase küsimuse peale.
-        if (nextQuestionNr < FIRST_QUESTION_NR)
-            nextQuestionNr = LAST_QUESTION_NR;
-        // ...ja vastupidi ka:
-        else if (nextQuestionNr > LAST_QUESTION_NR)
-            nextQuestionNr = FIRST_QUESTION_NR;
-
-        // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
-        prepareSlide(passiveSlide, nextQuestionNr);
-        // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-        move(-direction);
-
-        // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
-        // slaidi juures:
-        currentQuestionNr = nextQuestionNr;
-    }
-
+    // Seo Next ja Previous nupud vastavate toimingutega.
     $('#button-next').click(function() { changeSlide(RIGHT); });
     $('#button-prev').click(function() { changeSlide(LEFT); });
 });
