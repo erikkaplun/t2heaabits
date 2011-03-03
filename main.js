@@ -33,6 +33,25 @@ passiveSlide = null;
 currentQuestionNr = 0;
 
 
+// Setup slide tegeleb sellega, et slaidid oleks enne mängu
+// pihtahakkamist sobivas olekus.
+function setUpSlide(slide) {
+    // Paneme etteantud slaidi vastusevariantidele külge
+    // click-eventi handlerid:
+    slide.find(".option-1").click(function() {
+        var currentQuestion = QUESTIONS[currentQuestionNr];
+        alert("Valisite valiku: " + currentQuestion.options[0]);
+    });
+    slide.find(".option-2").click(function() {
+        var currentQuestion = QUESTIONS[currentQuestionNr];
+        alert("Valisite valiku: " + currentQuestion.options[1]);
+    });
+    slide.find(".option-3").click(function() {
+        var currentQuestion = QUESTIONS[currentQuestionNr];
+        alert("Valisite valiku: " + currentQuestion.options[2]);
+    });
+}
+
 // See protseduur/funktsioon täidab etteantud slaidi etteantud
 // küsimusega.
 function prepareSlide(slide, questionNr) {
@@ -93,6 +112,9 @@ $(function() {
     // Võta DOM'ist need DIV'id #slide-1 ja #slide-2
     activeSlide = $('#slide-1');
     passiveSlide = $('#slide-2');
+
+    setUpSlide(activeSlide);
+    setUpSlide(passiveSlide);
 
     // Täida aktiivne slaid sisuga ja tee ta nähtavaks.
     prepareSlide(activeSlide, currentQuestionNr);
