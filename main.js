@@ -3,14 +3,14 @@
 // * üks vastusevariantidest on õige:  (answer)
 //     0-esimene, 1=teine, 2=kolmas.
 QUESTIONS = [
-    {letter: 'a', options: ['aken', 'elevant', 'banaan'], answer: 0},
-    {letter: 'b', options: ['koer', 'banaan', 'elevant'], answer: 1},
-    {letter: 'c', options: ['aken', 'koer', 'coca-cola'], answer: 2},
-    {letter: 'd', options: ['dolomiit', 'kass', 'hiir'], answer: 0},
-    {letter: 'k', options: ['dolomiit', 'kass', 'hiir'], answer: 1},
-    {letter: 'x', options: ['xanax', 'elevant', 'ratas'], answer: 0},
-    {letter: 'r', options: ['koer', 'ratas', 'xanax'], answer: 1},
-    {letter: 'h', options: ['banaan', 'koer', 'hiir'], answer: 2}
+    {letter: "a", options: ["aken", "elevant", "banaan"], answer: 0},
+    {letter: "b", options: ["koer", "banaan", "elevant"], answer: 1},
+    {letter: "c", options: ["aken", "koer", "coca-cola"], answer: 2},
+    {letter: "d", options: ["dolomiit", "kass", "hiir"], answer: 0},
+    {letter: "k", options: ["dolomiit", "kass", "hiir"], answer: 1},
+    {letter: "x", options: ["xanax", "elevant", "ratas"], answer: 0},
+    {letter: "r", options: ["koer", "ratas", "xanax"], answer: 1},
+    {letter: "h", options: ["banaan", "koer", "hiir"], answer: 2}
 ];
 
 FIRST_QUESTION_NR = 0;
@@ -110,8 +110,8 @@ function changeSlide(direction) {
 
 $(function() {
     // Võta DOM'ist need DIV'id #slide-1 ja #slide-2
-    activeSlide = $('#slide-1');
-    passiveSlide = $('#slide-2');
+    activeSlide = $("#slide-1");
+    passiveSlide = $("#slide-2");
 
     setUpSlide(activeSlide);
     setUpSlide(passiveSlide);
@@ -121,6 +121,6 @@ $(function() {
     activeSlide.css("left", 0);
 
     // Seo Next ja Previous nupud vastavate toimingutega.
-    $('#button-next').click(function() { changeSlide(RIGHT); });
-    $('#button-prev').click(function() { changeSlide(LEFT); });
+    $("#button-next").click(function() { changeSlide(RIGHT); });
+    $("#button-prev").click(function() { changeSlide(LEFT); });
 });
