@@ -35,7 +35,7 @@ currentQuestionNr = 0;
 
 // Setup slide tegeleb sellega, et slaidid oleks enne mängu
 // pihtahakkamist sobivas olekus.
-function setUpSlide(slide) {
+function setUpEvents(slide) {
     // Paneme etteantud slaidi vastusevariantidele külge
     // click-eventi handlerid:
     slide.find(".option-1").click(function() {
@@ -54,14 +54,14 @@ function setUpSlide(slide) {
 
 // See protseduur/funktsioon täidab etteantud slaidi etteantud
 // küsimusega.
-function prepareSlide(slide, questionNr) {
+function loadQuestion(slide, questionNr) {
     var question = QUESTIONS[questionNr];
 
     // Leiame selle span'i, mille sees alguses on LETTER HERE:
-    var spanElement = slide.find(".question");
+    var questionEl = slide.find(".question");
 
     // Määrame selle elemendi sisuks question.letter'i sisu:
-    spanElement.text(question.letter);
+    questionEl.text(question.letter);
 
     slide.find(".option-1").text(question.options[0]);
     slide.find(".option-2").text(question.options[1]);
@@ -98,7 +98,7 @@ function changeSlide(direction) {
         nextQuestionNr = FIRST_QUESTION_NR;
 
     // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
-    prepareSlide(passiveSlide, nextQuestionNr);
+    loadQuestion(passiveSlide, nextQuestionNr);
     // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
     move(-direction);
 
@@ -113,11 +113,11 @@ $(function() {
     activeSlide = $("#slide-1");
     passiveSlide = $("#slide-2");
 
-    setUpSlide(activeSlide);
-    setUpSlide(passiveSlide);
+    setUpEvents(activeSlide);
+    setUpEvents(passiveSlide);
 
     // Täida aktiivne slaid sisuga ja tee ta nähtavaks.
-    prepareSlide(activeSlide, currentQuestionNr);
+    loadQuestion(activeSlide, currentQuestionNr);
     activeSlide.css("left", 0);
 
     // Seo Next ja Previous nupud vastavate toimingutega.
