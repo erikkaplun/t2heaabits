@@ -40,17 +40,11 @@ function setUpEvents(slide) {
 
     // Paneme etteantud slaidi vastusevariantidele külge
     // click-eventi handlerid:
-    $(allOptions[0]).click(function() {
-        var currentQuestion = QUESTIONS[currentQuestionNr];
-        alert("Valisite valiku: " + currentQuestion.options[0]);
-    });
-    $(allOptions[1]).click(function() {
-        var currentQuestion = QUESTIONS[currentQuestionNr];
-        alert("Valisite valiku: " + currentQuestion.options[1]);
-    });
-    $(allOptions[2]).click(function() {
-        var currentQuestion = QUESTIONS[currentQuestionNr];
-        alert("Valisite valiku: " + currentQuestion.options[2]);
+    allOptions.each(function(index, option) {
+        $(option).click(function() {
+            var currentQuestion = QUESTIONS[currentQuestionNr];
+            alert("Valisite valiku: " + currentQuestion.options[index]);
+        });
     });
 }
 
