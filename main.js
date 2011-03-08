@@ -3,14 +3,14 @@
 // * üks vastusevariantidest on õige:  (answer)
 //     0-esimene, 1=teine, 2=kolmas.
 QUESTIONS = [
-    {letter: "a", options: ["aken", "elevant", "banaan"], answer: 0},
-    {letter: "b", options: ["koer", "banaan", "elevant"], answer: 1},
-    {letter: "c", options: ["aken", "koer", "coca-cola"], answer: 2},
-    {letter: "d", options: ["dolomiit", "kass", "hiir"], answer: 0},
-    {letter: "k", options: ["dolomiit", "kass", "hiir"], answer: 1},
-    {letter: "x", options: ["xanax", "elevant", "ratas"], answer: 0},
-    {letter: "r", options: ["koer", "ratas", "xanax"], answer: 1},
-    {letter: "h", options: ["banaan", "koer", "hiir"], answer: 2}
+    {letter: 'a', color: 'lightgreen', options: ['aken', 'elevant', 'banaan'], answer: 0},
+    {letter: 'b', color: 'blue', options: ['koer', 'banaan', 'elevant'], answer: 1},
+    {letter: 'c', color: 'brown', options: ['aken', 'koer', 'coca-cola'], answer: 2},
+    {letter: 'd', color: 'yellow', options: ['dolomiit', 'kass', 'hiir'], answer: 0},
+    {letter: 'k', color: 'pink', options: ['dolomiit', 'kass', 'hiir'], answer: 1},
+    {letter: 'x', color: 'purple', options: ['xanax', 'elevant', 'ratas'], answer: 0},
+    {letter: 'r', color: '#f7a', options: ['koer', 'ratas', 'xanax'], answer: 1},
+    {letter: 'h', color: '#17a29f', options: ['banaan', 'koer', 'hiir'], answer: 2}
 ];
 
 FIRST_QUESTION_NR = 0;
@@ -58,6 +58,7 @@ function loadQuestion(slide, questionNr) {
 
     // Määrame selle elemendi sisuks question.letter'i sisu:
     questionEl.text(question.letter);
+    questionEl.css("color", question.color);
 
     var allImgElements = slide.find(".options img");
     allImgElements.each(function(index, imgEl) {
