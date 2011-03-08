@@ -36,12 +36,12 @@ currentQuestionNr = 0;
 // Setup slide tegeleb sellega, et slaidid oleks enne mängu
 // pihtahakkamist sobivas olekus.
 function setUpEvents(slide) {
-    var allOptions = slide.find(".options").children();
+    var allOptionElements = slide.find(".options").children();
 
     // Paneme etteantud slaidi vastusevariantidele külge
     // click-eventi handlerid:
-    allOptions.each(function(index, option) {
-        $(option).click(function() {
+    allOptionElements.each(function(index, optionEl) {
+        $(optionEl).click(function() {
             var currentQuestion = QUESTIONS[currentQuestionNr];
             alert("Valisite valiku: " + currentQuestion.options[index]);
         });
