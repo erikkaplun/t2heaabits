@@ -59,9 +59,9 @@ function loadQuestion(slide, questionNr) {
     // Määrame selle elemendi sisuks question.letter'i sisu:
     questionEl.text(question.letter);
 
-    slide.find(".option-1").text(question.options[0]);
-    slide.find(".option-2").text(question.options[1]);
-    slide.find(".option-3").text(question.options[2]);
+    slide.find(".option-1 img").attr("src", "media/" + question.options[0] + ".jpeg");
+    slide.find(".option-2 img").attr("src", "media/" + question.options[1] + ".jpeg");
+    slide.find(".option-3 img").attr("src", "media/" + question.options[2] + ".jpeg");
 }
 
 function move(direction) {

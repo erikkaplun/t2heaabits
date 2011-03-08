@@ -40,8 +40,10 @@
    left: 50px;
    width: 300px;
    text-align: center;
-
-   border: 1px solid red;
+   overflow: hidden;
+}
+.slide .options img {
+   height: 100px;
 }
 
 .slide .options {
