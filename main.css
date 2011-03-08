@@ -34,13 +34,14 @@
 
 
 .slide .question {
-   font-size: 40px;
+   font-family: Arial;
+   font-size: 150px;
+   text-transform: uppercase;
    position: absolute;
-   top: 50px;
+   top: 20px;
    left: 50px;
    width: 300px;
    text-align: center;
-   overflow: hidden;
 }
 .slide .options img {
    height: 100px;
@@ -59,6 +60,5 @@
    float: left;
 
    text-align: center;
-
-   border: 1px solid red;
+   overflow: hidden;
 }
