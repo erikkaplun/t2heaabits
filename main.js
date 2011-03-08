@@ -3,14 +3,14 @@
 // * üks vastusevariantidest on õige:  (answer)
 //     0-esimene, 1=teine, 2=kolmas.
 QUESTIONS = [
-    {letter: 'a', color: 'lightgreen', options: ['aken', 'elevant', 'banaan'], answer: 0},
-    {letter: 'b', color: 'blue', options: ['koer', 'banaan', 'elevant'], answer: 1},
-    {letter: 'c', color: 'brown', options: ['aken', 'koer', 'coca-cola'], answer: 2},
-    {letter: 'd', color: 'yellow', options: ['dolomiit', 'kass', 'hiir'], answer: 0},
-    {letter: 'k', color: 'pink', options: ['dolomiit', 'kass', 'hiir'], answer: 1},
-    {letter: 'x', color: 'purple', options: ['xanax', 'elevant', 'ratas'], answer: 0},
-    {letter: 'r', color: '#f7a', options: ['koer', 'ratas', 'xanax'], answer: 1},
-    {letter: 'h', color: '#17a29f', options: ['banaan', 'koer', 'hiir'], answer: 2}
+    {letter: 'a', color: 'lightgreen', bgColor: "darkgreen", options: ['aken', 'elevant', 'banaan'], answer: 0},
+    {letter: 'b', color: 'blue', bgColor: "lightblue", options: ['koer', 'banaan', 'elevant'], answer: 1},
+    {letter: 'c', color: 'brown', bgColor: "yellow", options: ['aken', 'koer', 'coca-cola'], answer: 2},
+    {letter: 'd', color: 'yellow', bgColor: "black", options: ['dolomiit', 'kass', 'hiir'], answer: 0},
+    {letter: 'k', color: 'pink', bgColor: "darkblue", options: ['dolomiit', 'kass', 'hiir'], answer: 1},
+    {letter: 'x', color: 'purple', bgColor: "pink", options: ['xanax', 'elevant', 'ratas'], answer: 0},
+    {letter: 'r', color: '#f7a', bgColor: "maroon", options: ['koer', 'ratas', 'xanax'], answer: 1},
+    {letter: 'h', color: '#dfe', bgColor: "#b93", options: ['banaan', 'koer', 'hiir'], answer: 2}
 ];
 
 FIRST_QUESTION_NR = 0;
@@ -59,6 +59,7 @@ function loadQuestion(slide, questionNr) {
     // Määrame selle elemendi sisuks question.letter'i sisu:
     questionEl.text(question.letter);
     questionEl.css("color", question.color);
+    slide.css("background-color", question.bgColor);
 
     var allImgElements = slide.find(".options img");
     allImgElements.each(function(index, imgEl) {
