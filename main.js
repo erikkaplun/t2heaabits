@@ -58,7 +58,11 @@ function setUpEvents(slide) {
     allOptionElements.each(function(index, optionEl) {
         $(optionEl).click(function() {
             var currentQuestion = QUESTIONS[currentQuestionNr];
-            alert("Valisite valiku: " + currentQuestion.options[index]);
+            if (currentQuestion.answer == index) {
+                alert("Jah!! Võtame järgmise!");
+            } else {
+                alert("Ei... proovi veel!");
+            }
         });
     });
 }
