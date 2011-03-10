@@ -61,7 +61,12 @@ function setUpEvents(slide) {
             if (currentQuestion.answer == index) {
                 alert("Jah!! Võtame järgmise!");
             } else {
-                alert("Ei... proovi veel!");
+                var randomValue = Math.random();
+                if (randomValue < 0.5) {
+                    alert("Ei... proovi veel!");
+                } else {
+                    alert("Vale vastus...");
+                }
             }
         });
     });
