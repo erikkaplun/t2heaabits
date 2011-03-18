@@ -40,8 +40,8 @@ LEFT = -1;
 
 // Need muutujad hoiavad järge, kumb slaid parajasti aktiivne ja kumb
 // passiivne on.
-activeSlide = null;
-passiveSlide = null;
+currentSlide = null;
+
 
 // See muutuja hoiab järge, millise küsimuse juures me parajasti
 // oleme.
@@ -60,6 +60,8 @@ function setUpEvents(slide) {
             var currentQuestion = QUESTIONS[currentQuestionNr];
             if (currentQuestion.answer == index) {
                 alert("Jah!! Võtame järgmise!");
+                allOptionElements.animate({width: "50px", height: "50px"});
+                $(optionEl).animate({width: "200px", height: "200px"});
             } else {
                 var randomValue = Math.random();
                 if (randomValue < 0.5) {
@@ -92,23 +94,30 @@ function loadQuestion(slide, questionNr) {
     });
 }
 
-function move(direction) {
+function move(fromSlide, toSlide, direction, EESKIRI) {
     // Jätame pasiivse slaidi varjatuks, aga paneme ta kohe
     // aknaraamist VASAKULE:
-    passiveSlide.css("left", (-direction) * SLIDE_WIDTH);
+    toSlide.css("left", (-direction) * SLIDE_WIDTH);
     // Liigutame aktiivse täispikkuse võrra PAREMALE, nii et ta
     // kaob lõpuks ära
-    activeSlide.animate({"left": direction * SLIDE_WIDTH});
+    fromSlide.animate({"left": direction * SLIDE_WIDTH},
+                      {complete: EESKIRI});
 
     // Liigutame passiivse täispikkuse võrra PAREMALE, nii et ta
     // ilmub lõpuks täpselt raami keskele nähtavaks.
-    passiveSlide.animate({"left": 0});
-
-    // Vahetame aktiivse ja passiivse slaidi omavahel:
-    var tmp = passiveSlide;
-    passiveSlide = activeSlide;
-    activeSlide = tmp;
+    toSlide.animate({"left": 0});
 }
+
+
+function createSlide(questionNr) {
+    var slide = $("#empty-slide").clone();
+    slide.attr("id", "current-slide");
+    slide.appendTo("#window");
+    setUpEvents(slide);
+    loadQuestion(slide, questionNr);
+    return slide;
+}
+
 
 function changeSlide(direction) {
     var nextQuestionNr = currentQuestionNr + direction;
@@ -121,10 +130,15 @@ function changeSlide(direction) {
     else if (nextQuestionNr > LAST_QUESTION_NR)
         nextQuestionNr = FIRST_QUESTION_NR;
 
-    // Valmistame lavataguse slaidi ette järgmise küsimuse kuvamseks:
-    loadQuestion(passiveSlide, nextQuestionNr);
+    var newSlide = createSlide(nextQuestionNr);
+
+    var PEALE_ANIMEERIMIST_TEE_SEDA = function() {
+        currentSlide.remove();
+        currentSlide = newSlide;
+    };
+
     // Liigutame aktiivse slaidi lavalt ära ja lavataguse tema asemele.
-    move(-direction);
+    move(currentSlide, newSlide, -direction, PEALE_ANIMEERIMIST_TEE_SEDA);
 
     // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
     // slaidi juures:
@@ -133,16 +147,8 @@ function changeSlide(direction) {
 
 
 $(function() {
-    // Võta DOM'ist need DIV'id #slide-1 ja #slide-2
-    activeSlide = $("#slide-1");
-    passiveSlide = $("#slide-2");
-
-    setUpEvents(activeSlide);
-    setUpEvents(passiveSlide);
-
-    // Täida aktiivne slaid sisuga ja tee ta nähtavaks.
-    loadQuestion(activeSlide, currentQuestionNr);
-    activeSlide.css("left", 0);
+    currentSlide = createSlide(FIRST_QUESTION_NR);
+    currentSlide.css("left", 0);
 
     // Seo Next ja Previous nupud vastavate toimingutega.
     $("#button-next").click(function() { changeSlide(RIGHT); });

@@ -18,6 +18,8 @@
    left: -1000px;  /* vaikimisi on slaid varjatud */
 }
 
+#empty-slide { display: none; }
+
 #slide-1 {
    background-color: #ffa;
 }
