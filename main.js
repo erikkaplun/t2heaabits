@@ -38,8 +38,7 @@ RIGHT = 1;
 LEFT = -1;
 
 
-// Need muutujad hoiavad järge, kumb slaid parajasti aktiivne ja kumb
-// passiivne on.
+// See muutuja viitab slaidile (DOM element), mis parasjagu aktiivne on:
 currentSlide = null;
 
 
