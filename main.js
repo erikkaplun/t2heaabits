@@ -2,34 +2,34 @@
 // * igal küsimusel on kolm vastusevarianti,  (options)
 // * üks vastusevariantidest on õige:  (answer)
 //     0-esimene, 1=teine, 2=kolmas.
-QUESTIONS = [
-    {letter: 'a', color: 'lightgreen', bgColor: "darkgreen",
+STEPS = [
+    {question: 'a', color: 'lightgreen', bgColor: "darkgreen",
      options: ['aken', 'elevant', 'banaan'], answer: 0},
 
-    {letter: 'b', color: 'blue', bgColor: "lightblue",
+    {question: 'b', color: 'blue', bgColor: "lightblue",
      options: ['koer', 'banaan', 'elevant'], answer: 1},
 
-    {letter: 'c', color: 'brown', bgColor: "yellow",
+    {question: 'c', color: 'brown', bgColor: "yellow",
      options: ['aken', 'koer', 'coca-cola'], answer: 2},
 
-    {letter: 'd', color: 'yellow', bgColor: "black",
+    {question: 'd', color: 'yellow', bgColor: "black",
      options: ['dolomiit', 'kass', 'hiir'], answer: 0},
 
-    {letter: 'k', color: 'pink', bgColor: "darkblue",
+    {question: 'k', color: 'pink', bgColor: "darkblue",
      options: ['dolomiit', 'kass', 'hiir'], answer: 1},
 
-    {letter: 'x', color: 'purple', bgColor: "pink",
+    {question: 'x', color: 'purple', bgColor: "pink",
      options: ['xanax', 'elevant', 'ratas'], answer: 0},
 
-    {letter: 'r', color: '#f7a', bgColor: "maroon",
+    {question: 'r', color: '#f7a', bgColor: "maroon",
      options: ['koer', 'ratas', 'xanax'], answer: 1},
 
-    {letter: 'h', color: '#dfe', bgColor: "#b93",
+    {question: 'h', color: '#dfe', bgColor: "#b93",
      options: ['banaan', 'koer', 'hiir'], answer: 2}
 ];
 
-FIRST_QUESTION_NR = 0;
-LAST_QUESTION_NR = QUESTIONS.length - 1;
+FIRST_STEP_NR = 0;
+LAST_STEP_NR = STEPS.length - 1;
 
 // Kui tahame disaini muuta, peame ainult siinse numbri ära muutma.
 SLIDE_WIDTH = 400;
@@ -42,15 +42,10 @@ LEFT = -1;
 currentSlide = null;
 
 
-// See muutuja hoiab järge, millise küsimuse juures me parajasti
-// oleme.
-currentQuestionNr = 0;
-
-
 $(function() {
     // createSlide loob slaidi, mis on täidetud etteantud numbriga
     // küsimusega ja paneb selle #window sisse.
-    currentSlide = createSlide(FIRST_QUESTION_NR);
+    currentSlide = createSlide(FIRST_STEP_NR);
     // Liigutame äsjaloodud slaidi paika, st täpselt aknasse:
     currentSlide.css("left", 0);
 
@@ -60,7 +55,7 @@ $(function() {
 });
 
 
-function createSlide(questionNr) {
+function createSlide(stepNr) {
 
     // Kloonime uue slaidi võttes näidiseks #empty-slide'i:
     var slide = $("#empty-slide").clone();
@@ -78,9 +73,11 @@ function createSlide(questionNr) {
     // event'id külge:
     setUpEvents(slide);
 
-    // Kutsume välja protseduuri, mis võtab QUESTIONS'ist vastava
+    // Kutsume välja protseduuri, mis võtab STEPS'ist vastava
     // numbriga küsimuse ja täidab slaidi selle küsimuse andmetega:
-    loadQuestion(slide, questionNr);
+    loadStep(slide, stepNr);
+
+    slide.stepNr = stepNr;
 
     // Tagastame äsjaloodud slaidi kellele iganes seda protseduuri
     // välja kutsus:
@@ -94,20 +91,20 @@ function changeSlide(direction) {
 
     // Arvutame nextQuestionNr'i. See arvutamine on tegelikult väga
     // lihtne, sest see on kas - 1 või + 1.
-    var nextQuestionNr = currentQuestionNr + direction;
+    var nextStepNr = currentSlide.stepNr + direction;
 
-    // Vaatame, et nextQuestionNr sisaldaks ainult korrektseid väärtusi.
+    // Vaatame, et nextStepNr sisaldaks ainult korrektseid väärtusi.
 
     // Kui me olime esimese küsimuse peal ja üritasime tagasi minna,
     // siis lähme hoopis viimase küsimuse peale.
-    if (nextQuestionNr < FIRST_QUESTION_NR)
-        nextQuestionNr = LAST_QUESTION_NR;
+    if (nextStepNr < FIRST_STEP_NR)
+        nextStepNr = LAST_STEP_NR;
     // ...ja vastupidi ka:
-    else if (nextQuestionNr > LAST_QUESTION_NR)
-        nextQuestionNr = FIRST_QUESTION_NR;
+    else if (nextStepNr > LAST_STEP_NR)
+        nextStepNr = FIRST_STEP_NR;
 
     // Loome uue slaidi, mis sisaldab küsimust, mida me kohe kuvama hakkame.
-    var newSlide = createSlide(nextQuestionNr);
+    var newSlide = createSlide(nextStepNr);
 
     // Kirjeldame sammud, mida teha PEALE animeerimist:
     var PEALE_ANIMEERIMIST_TEE_SEDA = function() {
@@ -116,6 +113,9 @@ function changeSlide(direction) {
         // animate'ile üle.
 
         currentSlide.remove();
+
+        // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
+        // slaidi juures:
         currentSlide = newSlide;
     };
 
@@ -126,12 +126,6 @@ function changeSlide(direction) {
     // Kui me eeskirja välja oleks kutsunud, siis me oleks move'ile
     // edasi andnud mitte eeskirja enda, vaid väärtuse, mille me
     // oleksime saanud eeskirja väljakutsumisest.
-
-    // Kui kõik on valmis, märgime ka üles, et nüüd oleme järgmise
-    // slaidi juures:
-    currentQuestionNr = nextQuestionNr;
-    // See on vajalik sellesama protseduuri esimesel real, et järgmine
-    // kord teaksime, millise küsimuse juures me oleme.
 }
 
 
@@ -181,8 +175,8 @@ function setUpEvents(slide) {
     // click-eventi handlerid:
     allOptionElements.each(function(index, optionEl) {
         $(optionEl).click(function() {
-            var currentQuestion = QUESTIONS[currentQuestionNr];
-            if (currentQuestion.answer == index) {
+            var currentStep = STEPS[slide.stepNr];
+            if (currentStep.answer == index) {
                 alert("Jah!! Võtame järgmise!");
                 allOptionElements.animate({width: "50px", height: "50px"});
                 $(optionEl).animate({width: "200px", height: "200px"});
@@ -201,20 +195,20 @@ function setUpEvents(slide) {
 
 // See protseduur/funktsioon täidab etteantud slaidi etteantud
 // küsimusega.
-function loadQuestion(slide, questionNr) {
-    var question = QUESTIONS[questionNr];
+function loadStep(slide, stepNr) {
+    var step = STEPS[stepNr];
 
     // Leiame selle span'i, mille sees alguses on LETTER HERE:
     var questionEl = slide.find(".question");
 
     // Määrame selle elemendi sisuks question.letter'i sisu:
-    questionEl.text(question.letter);
-    questionEl.css("color", question.color);
-    slide.css("background-color", question.bgColor);
+    questionEl.text(step.question);
+    questionEl.css("color", step.color);
+    slide.css("background-color", step.bgColor);
 
     var allImgElements = slide.find(".options img");
     allImgElements.each(function(index, imgEl) {
-        var imageUrl = "media/" + question.options[index] + ".jpeg";
+        var imageUrl = "media/" + step.options[index] + ".jpeg";
         $(imgEl).attr("src", imageUrl);
     });
 }
